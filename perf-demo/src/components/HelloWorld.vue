@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <template>
-        <FunctionalButton>
+        <FunctionalButton @click="LogFunctionalButton">
             click me!!!!  
         </FunctionalButton>
     </template>
@@ -44,6 +44,11 @@ export default {
   },
   components: {
     FunctionalButton
+  },
+  methods: {
+    LogFunctionalButton() {
+      console.log('LogFunctionalButton/......');
+    }
   }
 }
 </script>
