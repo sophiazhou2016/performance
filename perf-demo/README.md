@@ -4,4 +4,6 @@
 ## b)函数式组件
 > https://juejin.im/post/6844903630575763470
 ### 函数式组件没有实例，事件只能由父组件传递。下面我们在App.vue上定义一个最简单的click事件
+## c)slots
+> https://juejin.im/post/6844903817746628615
 
