@@ -30,7 +30,8 @@ export default {
     //     );
     // }
     // 最终写法
-    render(createElement, {data, children}) {
-        return createElement('button', data, children);
-    }
+    // render(createElement, {data, children}) {
+    //     console.log('createElement:', createElement)
+    //     return createElement('button', data, children);
+    // }
 }
