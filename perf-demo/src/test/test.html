@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--html-->
+    <div id="app">
+        <h3 id="paragraph"></h3>
+        <input type="text" id="input"/>
+    </div>
+    <script>
+        //获取段落的节点
+        const paragraph = document.getElementById('paragraph');
+        //获取输入框节点
+        const input = document.getElementById('input');
+            
+        //需要代理的数据对象
+        const data = {
+            text: 'hello world'
+        }
+
+        const handler = {
+            //监控 data 中的 text 属性变化
+            set: function (target, prop, value) {
+                if ( prop === 'text' ) {
+                        //更新值
+                        target[prop] = value;
+                        //更新视图
+                        paragraph.innerHTML = value;
+                        input.value = value;
+                        return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        //添加input监听事件
+        input.addEventListener('input', function (e) {
+            myText.text = e.target.value;   //更新 myText 的值
+        }, false)
+
+        //构造 proxy 对象
+        const myText = new Proxy(data,handler);
+
+        //初始化值
+        myText.text = data.text;    
+
+    </script>
+</body>
+</html>

@@ -7,3 +7,16 @@
 ## c)slots
 > https://juejin.im/post/6844903817746628615
 
+# 二：vue 3.0的初体验
+## a) setup 
+> https://www.cnblogs.com/jinzhenzong/p/12778729.html
+
+## b) proxy
+### 基础概念
+> src => test => proxy.js
+```js
+// ES6 原生提供 Proxy 构造函数，用来生成 Proxy 实例。
+var proxy = new Proxy(target, handler);
+// Proxy 对象的所有用法，都是上面这种形式，不同的只是handler参数的写法。其中，new Proxy()表示生成一个Proxy实例，target参数表示所要拦截的目标对象，handler参数也是一个对象，用来定制拦截行为。
+```
+### ES6 中 Proxy 目前提供了 13 种可代理操作：get, set, apply(target 必须是一个函数), construct(new), has(in), 
