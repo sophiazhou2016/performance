@@ -7,8 +7,6 @@
         </FunctionalButton>
     </template>
 
-    <h3 id="paragraph"></h3>
-    <input type="text" id="input"/>
     <!-- <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
