@@ -10,14 +10,16 @@
 ## Javascript设计模式之观察者模式
 > https://juejin.im/post/6844903698154389517
 
-### 什么是观察者模式？(发布-订阅者模式)
+### a)什么是观察者模式？(发布-订阅者模式)
 ```js
     document.querySelector('#btn').addEventListener('click',function () {
         alert('You click this btn');
     },false)
     // 对DOM的事件绑定就是一个非常典型的发布-订阅者模式
 ```
+### b)vue框架也使用了这种模式
 ![](https://user-gold-cdn.xitu.io/2018/10/23/166a031209fc8da5?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+> 代码见 src => test => observe.html
 
 # 二：vue 3.0的初体验
 ## a) setup 
