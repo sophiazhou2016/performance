@@ -34,6 +34,9 @@ export default {
     console.log('items:', items);
     return {items};
   },
+  created() {
+    console.log('this.$store:', this.$store);
+  },
   components: {
     // HelloWorld
   }

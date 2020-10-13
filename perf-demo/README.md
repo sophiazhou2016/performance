@@ -37,3 +37,39 @@ var proxy = new Proxy(target, handler);
 
 ### vue 3.0 双向数据绑定
 > 见src => test => proxy.html
+
+## c) 重新设计应用程序和全局API
+```js
+    // before
+    import Vue from 'vue'
+    import App from './App.vue'
+
+    Vue.config.ignoredElements = [/^app-/]
+    Vue.use(/* ... */)
+    Vue.mixin(/* ... */)
+    Vue.component(/* ... */)
+    Vue.directive(/* ... */)
+
+    Vue.prototype.customProperty = () => {}
+
+    new Vue({
+    render: h => h(App)
+    }).$mount('#app')
+```
+```js
+    // now
+    import { createApp } from 'vue'
+    import App from './App.vue'
+
+    const app = createApp(App)
+
+    app.config.isCustomElement = tag => tag.startsWith('app-')
+    app.use(/* ... */)
+    app.mixin(/* ... */)
+    app.component(/* ... */)
+    app.directive(/* ... */)
+
+    app.config.globalProperties.customProperty = () => {}
+
+    app.mount(App, '#app')
+```
