@@ -7,6 +7,7 @@
         <img height="200" :src="item.image" alt="">
       </li>
     </ul>
+    <router-view />
   </div>
 </template>
 

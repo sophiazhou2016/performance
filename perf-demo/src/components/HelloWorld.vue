@@ -1,11 +1,12 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    hello HelloWorld !!!!!
+    <!-- <h1>{{ msg }}</h1>
     <template>
         <FunctionalButton @click="LogFunctionalButton">
             click me!!!!  
         </FunctionalButton>
-    </template>
+    </template> -->
 
     <!-- <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -37,19 +38,19 @@
 </template>
 
 <script>
-import FunctionalButton from '../common/js/FunctionalButton.js';
+// import FunctionalButton from '../common/js/FunctionalButton.js';
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
   },
   components: {
-    FunctionalButton
+    // FunctionalButton
   },
   methods: {
-    LogFunctionalButton() {
-      console.log('LogFunctionalButton/......');
-    }
+    // LogFunctionalButton() {
+    //   console.log('LogFunctionalButton/......');
+    // }
   }
 }
 </script>

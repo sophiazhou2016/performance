@@ -73,3 +73,43 @@ var proxy = new Proxy(target, handler);
 
     app.mount(App, '#app')
 ```
+## d) vue 3.0 如何使用vue-router
+> router.js
+```js
+import { createRouter, createWebHashHistory } from 'vue-router'
+import HelloWorld from '../components/HelloWorld'
+
+const routes = [
+    {
+      path: '/HelloWorld',
+      name: 'HelloWorld',
+      component: HelloWorld
+    }
+]
+
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes
+})
+  
+export default router
+```
+```js
+const app = createApp(App);
+app.use(router) // 这样使用
+app.mount('#app')
+```
+> https://juejin.im/post/6844904150157754376
+
+# 三、从0到1 搭建webpack 
+> https://juejin.im/post/6844904035728932878
+## entry
+## output
+## module
+## loader
+### 1) test: 匹配处理文件的扩展名的正则表达式
+### 2) use: loader 名称，就是你要使用模块的名称
+> 要注意的是配置多个 loader 是 有顺序 的，webpack 会安装配置的 loader 顺序 从右向左 执行的，配置的时候要格外注意！
+### 3) include / exclude : 手动指定必须处理的文件夹活屏蔽不需要处理的文件夹
+### 4) query: 为loaders 提供额外的设置选项
+## plugins

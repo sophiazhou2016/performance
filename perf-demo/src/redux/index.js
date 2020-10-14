@@ -1,7 +1,15 @@
 function createStore () {
     // let state;
     //分发action
-    let dispatch = () =>{};
+    //分发action
+    let dispatch = (action)=>{
+        //判断 action 的 type 值
+        if( typeof action !== 'object') throw Error('Expected the action to be a object.');
+        if( action.type === undefined ) throw Error('The action.type is not defined');
+        //获取新的 state
+        state = reducer(state, action);
+    }
+
     
     //订阅数据更新
     let subscribe = ()=> {
