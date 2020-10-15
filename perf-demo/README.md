@@ -112,4 +112,4 @@ app.mount('#app')
 > 要注意的是配置多个 loader 是 有顺序 的，webpack 会安装配置的 loader 顺序 从右向左 执行的，配置的时候要格外注意！
 ### 3) include / exclude : 手动指定必须处理的文件夹活屏蔽不需要处理的文件夹
 ### 4) query: 为loaders 提供额外的设置选项
-## plugins
+## plugins 是一个数组，new 一个插件

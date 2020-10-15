@@ -25,7 +25,25 @@ module.exports = {
                     // insert: 'top'
                 }
             }, 'css-loader']
-        }]
+        },
+        {
+            test:/\.(png|jpg|gif|svg|bmp)$/,
+            use:{
+                loader: 'url-loader',
+                options: {
+                    limit: 10 * 1024,
+                    outputPath: 'images/' // 注意这里的打包之后的路径
+                }
+            }
+        },
+        {
+            test: /\.less/,
+            use: ['style-loader', 'css-loader', 'less-loader']
+        }, {
+            test: /\.scss/,
+            use: ['style-loader', 'css-loader', 'sass-loader']
+        }
+        ]
     },
     // 插件
     plugins: [
