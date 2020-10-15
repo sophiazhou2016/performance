@@ -1,4 +1,5 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: './src/index.js',
@@ -27,9 +28,23 @@ module.exports = {
         }]
     },
     // 插件
-    plugins: [],
+    plugins: [
+        //自动产出HTML模版
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'index.html',
+            hash: true,
+            minify: {
+                removeAttributeQuotes: true,
+                removeComments: true 
+            }
+        })
+    ],
     // 开发服务器配置
     devServer: {
-
+        contentBase: path.resolve(__dirname, 'dist'), // 配置开发服务器运行时的文件根目录，也就是静态资源访问地址
+        host: 'localhost',
+        port: '8086',
+        compress: true
     }
 };

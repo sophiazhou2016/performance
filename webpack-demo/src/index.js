@@ -1,4 +1,4 @@
 import './style/index.css';
-console.log('hello world!');
+console.log('hello world!！！！！！');
 
 document.querySelector('#app').style.color='red';

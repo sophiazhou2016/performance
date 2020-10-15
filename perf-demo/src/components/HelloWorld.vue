@@ -1,8 +1,9 @@
 <template>
   <div class="hello">
     hello HelloWorld !!!!!
-    <!-- <h1>{{ msg }}</h1>
-    <template>
+    <h1>count : {{ count }}</h1>
+    <button @click="add">add</button>
+    <!-- <template>
         <FunctionalButton @click="LogFunctionalButton">
             click me!!!!  
         </FunctionalButton>
@@ -39,10 +40,23 @@
 
 <script>
 // import FunctionalButton from '../common/js/FunctionalButton.js';
+import { ref } from 'vue'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  setup() {
+    const count = ref(0)
+
+    const add = () => {
+      count.value ++
+    }
+    
+    return {
+      count,
+      add
+    }
   },
   components: {
     // FunctionalButton
