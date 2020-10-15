@@ -1,11 +1,15 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const ASSET_PATH = process.env.ASSET_PATH || '/';
 module.exports = {
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[hash:8].js'
+        // path: path.resolve(__dirname, 'dist'),
+        // publicPath: path.resolve(__dirname, 'dist'),
+        // filename: '[name].[hash:8].js'
+        publicPath: ASSET_PATH,
     },
     // 模块转换规则
     module: {
@@ -20,11 +24,20 @@ module.exports = {
             // style-loader是 将css文件变成style标签插入到head中的。
             exclude: /node_modules/,
             use: [{
-                loader: 'style-loader',
+                // loader: 'style-loader',
+                loader: MiniCssExtractPlugin.loader,
                 options: {
-                    // insert: 'top'
+                    // publicPath: '/'
                 }
             }, 'css-loader']
+        },
+        
+        {
+            test: /\.less/,
+            use: [{loader: MiniCssExtractPlugin.loader}, 'css-loader', 'less-loader']
+        }, {
+            test: /\.scss/,
+            use: [{loader: MiniCssExtractPlugin.loader}, 'css-loader', 'sass-loader']
         },
         {
             test:/\.(png|jpg|gif|svg|bmp)$/,
@@ -35,13 +48,6 @@ module.exports = {
                     outputPath: 'images/' // 注意这里的打包之后的路径
                 }
             }
-        },
-        {
-            test: /\.less/,
-            use: ['style-loader', 'css-loader', 'less-loader']
-        }, {
-            test: /\.scss/,
-            use: ['style-loader', 'css-loader', 'sass-loader']
         }
         ]
     },
@@ -56,11 +62,15 @@ module.exports = {
                 removeAttributeQuotes: true,
                 removeComments: true 
             }
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style/[name].[hash].css',
+            chunkFilename: "style/[id].css"
         })
     ],
     // 开发服务器配置
     devServer: {
-        contentBase: path.resolve(__dirname, 'dist'), // 配置开发服务器运行时的文件根目录，也就是静态资源访问地址
+        // contentBase: path.resolve(__dirname, 'dist'), // 配置开发服务器运行时的文件根目录，也就是静态资源访问地址
         host: 'localhost',
         port: '8086',
         compress: true
