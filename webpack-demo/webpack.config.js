@@ -2,14 +2,15 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 module.exports = {
     entry: './src/index.js',
     output: {
-        // path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'dist'),
         // publicPath: path.resolve(__dirname, 'dist'),
-        // filename: '[name].[hash:8].js'
+        filename: '[name].[hash:8].js',
         publicPath: ASSET_PATH,
     },
     // 模块转换规则
@@ -81,7 +82,8 @@ module.exports = {
                     to: path.resolve(__dirname, 'dist/static')
                 }
             ]
-        })
+        }),
+        new CleanWebpackPlugin()
     ],
     // 开发服务器配置
     devServer: {
@@ -89,5 +91,14 @@ module.exports = {
         host: 'localhost',
         port: '8086',
         compress: true
+    },
+    proxy :  {
+        "/api/test": {
+         target: 'http://lohost:3000/', 
+         secure: false,  
+         changeOrigin: true, 
+         pathRewrite: {
+           '^/api/test': '/test'
+        }
     }
 };
