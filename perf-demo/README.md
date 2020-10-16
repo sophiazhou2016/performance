@@ -180,3 +180,4 @@ app.mount('#app')
 ## 打包前清空  npm install clean-webpack-plugin -D
 ## 服务器代理
 > 如果是https接口，需要配置 secure 这个参数 为 true ，如果接口跨域，需要配置changeOrigin这个参数为 true
+## 压缩

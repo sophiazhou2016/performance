@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
 module.exports = {
@@ -83,22 +85,33 @@ module.exports = {
                 }
             ]
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new TerserPlugin({
+            parallel: true, // 开启多进程
+        }),
+        // OptimizeCSSAssetsPlugin 中加载了一个 cssnano 的东西， 
+        // cssnano是PostCSS的CSS优化和分解插件，会自动采用格式很好的CSS，
+        // 并通过许多优化，以确保最终的生产环境尽可能小。
+        new OptimizeCSSAssetsPlugin({
+            assetNameRegExp:/\.css$/g,
+            cssProcessor:require('cssnano')
+        })
     ],
     // 开发服务器配置
     devServer: {
         // contentBase: path.resolve(__dirname, 'dist'), // 配置开发服务器运行时的文件根目录，也就是静态资源访问地址
         host: 'localhost',
         port: '8086',
-        compress: true
-    },
-    proxy :  {
-        "/api/test": {
-         target: 'http://lohost:3000/', 
-         secure: false,  
-         changeOrigin: true, 
-         pathRewrite: {
-           '^/api/test': '/test'
+        compress: true,
+        proxy :  {
+            "/api/test": {
+                target: 'http://lohost:3000/', 
+                secure: false,  
+                changeOrigin: true, 
+                pathRewrite: {
+                '^/api/test': '/test'
+                }
+            }
         }
     }
 };
