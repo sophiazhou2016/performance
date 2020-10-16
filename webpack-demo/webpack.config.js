@@ -22,14 +22,15 @@ module.exports = {
             // 方式3
             // 因为 css-loader是解析处理css里的url路径，并将css文件转换成一个模块，
             // style-loader是 将css文件变成style标签插入到head中的。
-            exclude: /node_modules/,
             use: [{
                 // loader: 'style-loader',
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    // publicPath: '/'
+                    // publicPath: '/'  
                 }
-            }, 'css-loader']
+            }, 'css-loader', 'postcss-loader'],
+            include: path.join(__dirname, './src'),
+            exclude: /node_modules/
         },
         
         {
@@ -37,7 +38,7 @@ module.exports = {
             use: [{loader: MiniCssExtractPlugin.loader}, 'css-loader', 'less-loader']
         }, {
             test: /\.scss/,
-            use: [{loader: MiniCssExtractPlugin.loader}, 'css-loader', 'sass-loader']
+            use: [{loader: MiniCssExtractPlugin.loader}, 'css-loader', 'postcss-loader', 'sass-loader']
         },
         {
             test:/\.(png|jpg|gif|svg|bmp)$/,

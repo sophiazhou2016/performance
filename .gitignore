@@ -3,6 +3,7 @@
 # dependencies
 react-demo/node_modules
 webpack-demo/node_modules
+webpack-demo/dist
 /.pnp
 .pnp.js
 

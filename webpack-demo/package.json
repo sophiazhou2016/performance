@@ -12,6 +12,7 @@
   "author": "zhourongjing <zhourongjing@ppdai.com> (https://github.com/sophiazhou2016)",
   "license": "MIT",
   "devDependencies": {
+    "autoprefixer": "^9.0.0",
     "css-loader": "^4.3.0",
     "file-loader": "^6.1.1",
     "html-webpack-plugin": "^4.5.0",
@@ -19,6 +20,7 @@
     "less-loader": "^7.0.2",
     "mini-css-extract-plugin": "^1.0.0",
     "node-sass": "^4.14.1",
+    "postcss-loader": "^4.0.4",
     "sass-loader": "^10.0.3",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",

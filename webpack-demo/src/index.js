@@ -11,3 +11,9 @@ let img = new Image();
 img.src = Avatar;
 
 document.body.appendChild(img);
+
+//index.js
+
+let input = document.createElement('input');
+document.body.appendChild(input);
+
