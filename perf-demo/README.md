@@ -119,3 +119,61 @@ app.mount('#app')
 ## css less sasss
 ## css 分割
 ## 处理css3属性前缀 postcss autoprefixer
+## 转义 ES6/ES7
+> babel-loader只是告诉了 webpack 怎么处理 ES6，ES7 代码，但它并不会将 ES6，ES7 代码翻译成向后兼容版本的代码，因此需要指定一个 preset，它包含了代码转换的规则
+```js
+// .babelrc
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": [
+            "> 1%",
+            "last 2 versions"
+          ]
+        },
+        "debug":true //调试使用
+      }
+    ]
+  ]
+}
+
+```
+>  npm install babel-loader @babel/core @babel/preset-env -D
+> 然而转换的并不彻底 我们还需要 babel 提供的另一个工具—— polyfill
+> 然而默认情况下会被添加到每一个需要它的文件中，并且会全局注入，造成全局污染，如果我们在开发框架之类的，可能会发生冲突
+> npm install @babel/runtime @babel/plugin-transform-runtime -D安装
+```js
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "targets": {
+          "browsers": [
+            "> 1%",
+            "last 2 versions"
+          ]
+        },
+        "debug":true //调试使用
+      }
+    ]
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": true
+      }
+    ]
+  ]
+}
+
+```
+## 拷贝静态文件

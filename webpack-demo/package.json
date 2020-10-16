@@ -12,7 +12,13 @@
   "author": "zhourongjing <zhourongjing@ppdai.com> (https://github.com/sophiazhou2016)",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/runtime": "^7.12.1",
     "autoprefixer": "^9.0.0",
+    "babel-loader": "^8.1.0",
     "css-loader": "^4.3.0",
     "file-loader": "^6.1.1",
     "html-webpack-plugin": "^4.5.0",

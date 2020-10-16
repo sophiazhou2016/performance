@@ -49,6 +49,11 @@ module.exports = {
                     outputPath: 'images/' // 注意这里的打包之后的路径
                 }
             }
+        },
+        {
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: '/node_modules/'
         }
         ]
     },
