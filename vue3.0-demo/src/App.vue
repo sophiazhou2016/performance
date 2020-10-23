@@ -1,16 +1,46 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" :age='12' />
+  <div>
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"  />
+    <p>{{name}} : {{computedNameRef}} - {{name2}}</p>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, reactive, ref, computed, watchEffect } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     HelloWorld
+  },
+  setup(props, {slots, attrs, emit}) {
+    // { value: 'Jing'}
+    const nameRef = ref('Jing')
+    const name2 = ref(22)
+
+    setInterval(() => {
+      nameRef.value += '1'
+    }, 1000)
+
+    setInterval(() => {
+      name2.value += 10
+    }, 1000)
+
+    const computedNameRef = computed(() => {
+      return nameRef.value + '2'
+    })
+
+    watchEffect(() => {
+      console.log(nameRef.value) // 只要在这个函数里面的变量都会被watch
+    })
+
+    return {
+      name: nameRef,
+      computedNameRef,
+      name2
+    }
   }
 });
 </script>
