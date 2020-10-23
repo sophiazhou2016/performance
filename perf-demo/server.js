@@ -6,5 +6,5 @@ app.use(compression())
 app.use(express.static('dist'))
 
 app.listen(3001, () => {
-    console.log('listening 3001......')
+    console.log('listening 3001......');
 })
