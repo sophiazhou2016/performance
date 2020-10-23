@@ -55,3 +55,25 @@ type MyComponent = DefineComponent<
   },
 >
 ```
+
+### vue 的 h 函数详解(第一个参数是标签，第二个参数是属性，第三个参数是 children)
+
+```js
+import HelloWorld from './components/HelloWorld.vue'
+const img = require('./assets/logo.png') // eslint-disable-line
+
+const App = defineComponent({
+  render() {
+    return h('div', { id: 'app' }, [
+      h('img', {
+        alt: 'Vue logo',
+        src: img,
+      }),
+      h(HelloWorld, {
+        msg: 'Welcome to Your Vue.js + TypeScript App',
+        age: 12,
+      }),
+    ])
+  },
+})
+```
