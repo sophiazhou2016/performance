@@ -1,11 +1,11 @@
 import { defineComponent, reactive, ref } from 'vue'
 
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld'
 
 const img = require('./assets/logo.png') // eslint-disable-line
 
 function renderHelloWorld(num: number) {
-    return <HelloWorld age={num} />
+    return <HelloWorld age={16}/>
 }
 export default defineComponent({
     setup() {
