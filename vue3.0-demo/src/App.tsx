@@ -1,7 +1,12 @@
 import { defineComponent, reactive, ref } from 'vue'
 
+import HelloWorld from './components/HelloWorld.vue'
+
 const img = require('./assets/logo.png') // eslint-disable-line
 
+function renderHelloWorld(num: number) {
+    return <HelloWorld age={16} />
+}
 export default defineComponent({
     setup() {
         const state = reactive({
@@ -21,6 +26,7 @@ export default defineComponent({
                 <img src={img} alt="Vue logo" />
                 <p>{state.name + number}</p>
                 <h2>哈哈 ，我做了一个jsx</h2>
+                <HelloWorld age={12}/>
             </div>
         }
     }
