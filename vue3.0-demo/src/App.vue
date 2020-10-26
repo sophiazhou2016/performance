@@ -1,7 +1,7 @@
 <template>
   <div>
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"  />
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" :age='12' :config="config" />
     <p>{{name}} : {{computedNameRef}} - {{name2}}</p>
   </div>
 </template>
@@ -14,6 +14,9 @@ export default defineComponent({
   name: "App",
   components: {
     HelloWorld
+  },
+  mounted() {
+    console.log('this.name : ', this.name);
   },
   setup(props, {slots, attrs, emit}) {
     // { value: 'Jing'}

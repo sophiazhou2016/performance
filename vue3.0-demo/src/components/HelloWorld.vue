@@ -17,10 +17,10 @@ const PropsType = {
     type: Number,
     required: true,
   },
-  config: {
-    type: Object as PropType<Config>,
-    required: true
-  }
+  // config: {
+  //   type: Object as PropType<Config>,
+  //   required: true
+  // }
 } as const
 
 export default defineComponent({
