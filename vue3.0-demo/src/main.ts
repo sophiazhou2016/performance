@@ -1,9 +1,9 @@
 // import { createApp } from 'vue'
 import { createApp, defineComponent, h, reactive, ref } from 'vue'
-import App from './App.vue'
-// import App from './App'
+// import App from './App.vue'
+import App from './App'
 
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
 const img = require('./assets/logo.png') // eslint-disable-line
 
 // const App = defineComponent({
