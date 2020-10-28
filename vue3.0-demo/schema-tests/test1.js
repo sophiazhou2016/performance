@@ -5,7 +5,7 @@ const schema = {
     properties: {
         name: {
             type: 'string',
-            format: 'email'
+            format: 'test'
         },
         age: {
             type: 'number'
@@ -23,9 +23,14 @@ const schema = {
     required: ['name', 'age']
 };
 const ajv = new Ajv()
+// 自定义format : test
+ajv.addFormat('test', (data) => {
+    console.log('data:-------', data)
+    return data === 'haha'
+})
 const validate = ajv.compile(schema)
 const valid = validate({
-    name: 'elsa',
+    name: 'haha',
     age: 18,
     pets: ['mini', 'mani'],
     isWorker: true
