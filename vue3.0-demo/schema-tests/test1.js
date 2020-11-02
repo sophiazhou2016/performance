@@ -31,14 +31,21 @@ const ajv = new Ajv()
 //     return data === 'haha'
 // })
 ajv.addKeyword('test', {
-    validate(schema, data) {
-        // console.log('addKeyword: ', schema, 'data:' ,data)
-        if(schema === true) {
-            return true
-        }else {
-            return schema.length === 6
-        }
+    compile(sch, parentSchema) {
+        console.log('compile:', sch, parentSchema)
+        return () => true
+    },
+    metaSchema: {
+        type: 'boolean'
     }
+    // validate(schema, data) {
+    //     // console.log('addKeyword: ', schema, 'data:' ,data)
+    //     if(schema === true) {
+    //         return true
+    //     }else {
+    //         return schema.length === 6
+    //     }
+    // }
 })
 const validate = ajv.compile(schema)
 const valid = validate({
