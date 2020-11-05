@@ -6,7 +6,12 @@ const schema = {
     properties: {
         name: {
             type: 'string',
-            test: false
+            // test: false,
+            errorMessage: {
+                type: '必须是个字符串',
+                minLength: '长度不能少于10个哦~'
+            },
+            minLength: 10 // macro 会自动加上
             // format: 'test'
         },
         age: {
@@ -24,32 +29,49 @@ const schema = {
     },
     required: ['name', 'age']
 };
-const ajv = new Ajv()
+const ajv = new Ajv({ allErrors: true, jsonPointers: true })
+require('ajv-errors')(ajv)
 // 自定义format : test
 // ajv.addFormat('test', (data) => {
 //     console.log('data:-------', data)
 //     return data === 'haha'
 // })
 ajv.addKeyword('test', {
-    compile(sch, parentSchema) {
-        console.log('compile:', sch, parentSchema)
-        return () => true
+    macro(schema, parentSchema) {
+        return {
+            minLength: 10
+        }
     },
-    metaSchema: {
-        type: 'boolean'
-    }
-    // validate(schema, data) {
-    //     // console.log('addKeyword: ', schema, 'data:' ,data)
-    //     if(schema === true) {
-    //         return true
-    //     }else {
-    //         return schema.length === 6
-    //     }
+    // compile(sch, parentSchema) {
+    //     console.log('compile:', sch, parentSchema)
+    //     return () => true
+    // },
+    // metaSchema: {
+    //     type: 'boolean'
     // }
+    validate: function fun (schema, data) {
+        fun.errors = [
+            {
+                keyword: 'test',
+                dataPath: '.name',
+                schemaPath: '#/properties/name/test11',
+                params: { keyword: 'test' },
+                message: 'hello errormessage'
+            }
+        ]
+        console.log('xxxx')
+        return false
+        // console.log('addKeyword: ', schema, 'data:' ,data)
+        // if(schema === true) {
+        //     return true
+        // }else {
+        //     return schema.length === 6
+        // }
+    }
 })
 const validate = ajv.compile(schema)
 const valid = validate({
-    name: 'haha',
+    name: '11',
     age: 18,
     pets: ['mini', 'mani'],
     isWorker: true
