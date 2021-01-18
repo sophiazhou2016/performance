@@ -1,4 +1,7 @@
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, ref, Ref, reactive, watchEffect } from 'vue'
+import { createUseStyles } from 'vue-jss'
+
+import MonacoEditor from './components/MonacoEditor'
 
 import HelloWorld from './components/HelloWorld'
 
