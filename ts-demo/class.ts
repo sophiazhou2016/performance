@@ -17,4 +17,4 @@ function greeter (person : Person) {
 
 const user1 = new Student("Jane", "M.", "User");
 
-document.body.innerHTML = greeter(user);
+document.body.innerHTML = greeter(user1);
