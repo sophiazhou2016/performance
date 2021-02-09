@@ -118,3 +118,81 @@ let mySquare = createSquare({ color: 'black' })
 ```
 
 > 可选属性的好处之一是可以对可能存在的属性进行预定义，好处之二是可以捕获引用了不存在的属性时的错误
+
+### 只读属性:一些对象属性只能在对象刚刚创建的时候修改其值。 你可以在属性名前用 readonly 来指定只读属性
+
+```ts
+interface Point {
+  readonly x: number
+  readonly y: number
+}
+let p1: Point = { x: 10, y: 20 }
+p1.x = 5 // error!
+// readonly vs const
+// 最简单判断该用readonly还是const的方法是看要把它做为变量使用还是做为一个属性。 做为变量使用的话用 const，若做为属性则使用readonly。
+```
+
+### 额外的属性检查
+
+```ts
+interface SquareConfig {
+  color?: string
+  width?: number
+}
+
+function createSquare(config: SquareConfig): { color: string; area: number } {
+  // ...
+}
+
+let mySquare = createSquare({ colour: 'red', width: 100 }) // 会报错，多传了 colour
+```
+
+> 绕开额外属性检查非常简单。 最简便的方法是使用类型断言：
+
+```ts
+let mySquare = createSquare({ width: 100, opacity: 0.5 } as SquareConfig)
+```
+
+```ts
+interface SquareConfig {
+  color?: string
+  width?: number
+  [propName: string]: any
+}
+```
+
+### 函数类型
+
+```ts
+interface SearchFunc {
+  (source: string, subString: string): boolean
+}
+let mySearch: SearchFunc
+mySearch = function (source: string, subString: string) {
+  let result = source.search(subString)
+  return result > -1
+}
+```
+
+> 对于函数类型的类型检查来说，函数的参数名不需要与接口里定义的名字相匹配。 比如，我们使用下面的代码重写上面的例子
+
+```ts
+let mySearch: SearchFunc
+mySearch = function (src: string, sub: string): boolean {
+  let result = src.search(sub)
+  return result > -1
+}
+```
+
+### 可索引的类型
+
+```ts
+interface StringArray {
+  [index: number]: string
+}
+
+let myArray: StringArray
+myArray = ['Bob', 'Fred']
+
+let myStr: string = myArray[0]
+```
