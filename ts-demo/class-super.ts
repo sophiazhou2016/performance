@@ -1,28 +1,29 @@
-class Animal2 {
+class Animal {
+    readonly name: string
     constructor(name) {
         this.name = name
     }
-    run() {
+    protected run() {
         return `${this.name} is runing`
     }
 }
 
-const snake = new Animal2('lily')
+const snake = new Animal('lily')
 console.log(snake.run())
 
 // 类的封装就是把所有的东西封装起来，只暴露接口给外部访问
 // 继承
-class Dog2 extends Animal2 {
+class Dog extends Animal {
     bark() {
         return `${this.name} is barking`
     }
 }
 
-const dog = new Dog2('xiaoxiao')
+const dog = new Dog('xiaoxiao')
 console.log(dog.run())
 console.log(dog.bark())
 
-class Cat2 extends Animal2 {
+class Cat extends Animal {
     static categeories = ['mamal'] // 静态属性
     constructor(name) {
         super(name) // 
@@ -33,6 +34,6 @@ class Cat2 extends Animal2 {
     }
 }
 
-const cat = new Cat2('maomao')
+const cat = new Cat('maomao')
 console.log(cat.run())
-console.log(Cat2.categeories) // 可以直接访问，跟实例的状态定义没有关系
+console.log(Cat.categeories) // 可以直接访问，跟实例的状态定义没有关系
