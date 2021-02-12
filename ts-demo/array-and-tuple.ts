@@ -12,4 +12,5 @@ function test() {
 let user: [string, number] = ['jingjing', 12] // 元组类型，限定了类型的数组
 user.push(true) // 只可以push string 或者 number
 
-let users: Array<string> = []
+let array_and_tuple_users1: Array<string> = []
+let array_and_tuple_users2: string[] = []
