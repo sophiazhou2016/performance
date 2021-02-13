@@ -2,24 +2,29 @@
   <div>
     <img alt="Vue logo" src="./assets/logo.png">
     <h1>{{count}}</h1>
+    <h1>{{double}}</h1>
     <button @click="increse">点赞+1</button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 // import HelloWorld from './components/HelloWorld.vue';
 
 export default defineComponent({
   name: 'App',
   setup() {
     const count = ref(0)
+    const double = computed(() => {
+      return count.value * 2
+    })
     const increse = () => {
       count.value ++
     }
     return {
       count,
-      increse
+      increse,
+      double
     }
   }
 });
