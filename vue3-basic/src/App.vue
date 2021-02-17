@@ -4,16 +4,19 @@
     <h1>{{count}}</h1>
     <h1>{{double}}</h1>
     <button @click="increase">点赞+1</button>
+    <h1>X:{{x}}, Y: {{y}}</h1>
     <ul>
       <li v-for="number in numbers" :key="number"><h1>{{number}}</h1></li>
     </ul>
     <h1>{{person.name}}</h1>
+    <button @click="updateGreetings">update title</button>
+
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, toRefs, onMounted, onUpdated, computed, onRenderTriggered } from 'vue';
-
+import { defineComponent, ref, reactive, toRefs, onMounted, onUnmounted, onUpdated, computed,watch, onRenderTriggered } from 'vue';
+import useMousePosition from './hooks/useMousePosition';
 interface DataProps {
   count: number;
   double: number;
@@ -24,22 +27,6 @@ interface DataProps {
 export default defineComponent({
   name: 'App',
   setup() {
-    // const count = ref(0)
-    // const double = computed(() => {
-    //   return count.value * 2
-    // })
-    // const increase = () => {
-    //   count.value ++
-    // }
-    onMounted(() => {
-      console.log('mounted')
-    })
-    onUpdated(() => {
-      console.log('updated')
-    })
-    onRenderTriggered((event) => {
-      console.log('onRenderTriggered', event)
-    })
     const data: DataProps = reactive({
       count: 0,
       increase: () => { data.count++ },
@@ -47,12 +34,27 @@ export default defineComponent({
       numbers: [0, 1, 2],
       person: {}
     })
+    const greetings = ref('')
+    const updateGreetings = () => {
+      greetings.value += 'Hello! '
+    }
+    const {x, y} = useMousePosition()
+    watch([greetings, () => data.count], (newValue, oldValue) => {
+      // watch的东西必须是响应式的
+      console.log('old', oldValue)
+      console.log('new', newValue)
+      document.title = 'updated' + greetings.value + data.count
+    })
     data.numbers[0] = 5
     data.person.name = 'jing'
     const refData = toRefs(data)
     refData.count // 他里面的每一项都会变成响应式的，可以看到是Ref<number>
     return {
-      ...refData
+      ...refData,
+      greetings,
+      updateGreetings,
+      x,
+      y
       // ...data
       // 把值取出来会变成普通的值，失去响应式
       // count: data.count,
