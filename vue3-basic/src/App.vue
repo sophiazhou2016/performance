@@ -6,7 +6,7 @@
     <button @click="increase">点赞+1</button>
     <h1>X:{{x}}, Y: {{y}}</h1>
     <h1 v-if="loading">Loading !...</h1>
-    <img v-if="loaded" :src="result.message" />
+    <img v-if="loaded" :src="result[0].url" />
     <ul>
       <li v-for="number in numbers" :key="number"><h1>{{number}}</h1></li>
     </ul>
@@ -27,6 +27,16 @@ interface DataProps {
   numbers: number[];
   person: { name?: string};
 }
+interface DogResult {
+  message: string;
+  status: string;
+}
+interface CatResult {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+}
 export default defineComponent({
   name: 'App',
   setup() {
@@ -42,7 +52,13 @@ export default defineComponent({
       greetings.value += 'Hello! '
     }
     const { x, y } = useMousePosition()
-    const { result, loading, loaded } = useURLLoader('https://dog.ceo/api/breeds/image/random')
+    // const { result, loading, loaded } = useURLLoader<DogResult>('https://api.thecatapi.com/v1/images/search?limit=1')
+    const { result, loading, loaded } = useURLLoader<CatResult[]>('https://api.thecatapi.com/v1/images/search?limit=1')
+    watch(result, () => {
+      if(result.value) {
+        console.log(result.value[0])
+      }
+    })
     watch([greetings, () => data.count], (newValue, oldValue) => {
       // watch的东西必须是响应式的
       console.log('old', oldValue)
