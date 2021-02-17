@@ -5,6 +5,8 @@
     <h1>{{double}}</h1>
     <button @click="increase">点赞+1</button>
     <h1>X:{{x}}, Y: {{y}}</h1>
+    <h1 v-if="loading">Loading !...</h1>
+    <img v-if="loaded" :src="result.message" />
     <ul>
       <li v-for="number in numbers" :key="number"><h1>{{number}}</h1></li>
     </ul>
@@ -17,6 +19,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, toRefs, onMounted, onUnmounted, onUpdated, computed,watch, onRenderTriggered } from 'vue';
 import useMousePosition from './hooks/useMousePosition';
+import useURLLoader from './hooks/useURLLoader';
 interface DataProps {
   count: number;
   double: number;
@@ -38,7 +41,8 @@ export default defineComponent({
     const updateGreetings = () => {
       greetings.value += 'Hello! '
     }
-    const {x, y} = useMousePosition()
+    const { x, y } = useMousePosition()
+    const { result, loading, loaded } = useURLLoader('https://dog.ceo/api/breeds/image/random')
     watch([greetings, () => data.count], (newValue, oldValue) => {
       // watch的东西必须是响应式的
       console.log('old', oldValue)
@@ -54,7 +58,10 @@ export default defineComponent({
       greetings,
       updateGreetings,
       x,
-      y
+      y,
+      result,
+      loading,
+      loaded
       // ...data
       // 把值取出来会变成普通的值，失去响应式
       // count: data.count,
