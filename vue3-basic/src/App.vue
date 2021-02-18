@@ -4,6 +4,14 @@
     <h1>{{count}}</h1>
     <h1>{{double}}</h1>
     <button @click="increase">点赞+1</button>
+    <Suspense>
+      <template #default>
+        <async-show/>
+      </template>
+      <template #fallback>
+        <h1>Loading !......</h1>
+      </template>
+    </Suspense>
     <button @click="openModal">open modal</button>
     <modal :isOpen="modalIsOpen" @close-modal="onModalClose">This is my real modal</modal>
     <h1>X:{{x}}, Y: {{y}}</h1>
@@ -23,6 +31,7 @@ import { defineComponent, ref, reactive, toRefs, onMounted, onUnmounted, onUpdat
 import useMousePosition from './hooks/useMousePosition';
 import useURLLoader from './hooks/useURLLoader';
 import modal from './components/modal.vue';
+import AsyncShow from './components/AsyncShow.vue';
 interface DataProps {
   count: number;
   double: number;
@@ -43,7 +52,8 @@ interface CatResult {
 export default defineComponent({
   name: 'App',
   components: {
-    modal
+    modal,
+    AsyncShow
   },
   setup() {
     const data: DataProps = reactive({
@@ -74,7 +84,7 @@ export default defineComponent({
     data.numbers[0] = 5
     data.person.name = 'jing'
     const refData = toRefs(data)
-    refData.count // 他里面的每一项都会变成响应式的，可以看到是Ref<number>
+    // refData.count // 他里面的每一项都会变成响应式的，可以看到是Ref<number>
     const modalIsOpen = ref(false)
     const openModal = () => {
       modalIsOpen.value = true
