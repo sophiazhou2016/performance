@@ -38,6 +38,10 @@ export default defineComponent({
   props: {
     msg: String,
   },
+  setup(props, context) {
+    props.msg
+    context.attrs
+  }
 });
 </script>
 
