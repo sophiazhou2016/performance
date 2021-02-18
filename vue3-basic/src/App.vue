@@ -4,9 +4,10 @@
     <h1>{{count}}</h1>
     <h1>{{double}}</h1>
     <button @click="increase">点赞+1</button>
+    <modal></modal> 
     <h1>X:{{x}}, Y: {{y}}</h1>
     <h1 v-if="loading">Loading !...</h1>
-    <img v-if="loaded" :src="result[0].url" />
+    <img v-if="loaded" class="picCat" :src="result[0].url" />
     <ul>
       <li v-for="number in numbers" :key="number"><h1>{{number}}</h1></li>
     </ul>
@@ -20,6 +21,7 @@
 import { defineComponent, ref, reactive, toRefs, onMounted, onUnmounted, onUpdated, computed,watch, onRenderTriggered } from 'vue';
 import useMousePosition from './hooks/useMousePosition';
 import useURLLoader from './hooks/useURLLoader';
+import modal from './components/modal.vue';
 interface DataProps {
   count: number;
   double: number;
@@ -39,6 +41,9 @@ interface CatResult {
 }
 export default defineComponent({
   name: 'App',
+  components: {
+    modal
+  },
   setup() {
     const data: DataProps = reactive({
       count: 0,
@@ -96,5 +101,11 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  
 }
+.picCat {
+  display: block;
+  width: 100%;
+}
+
 </style>
