@@ -1,7 +1,8 @@
 <template>
     <teleport to="#modal">
-        <div class="center">
-            <h2>this is a modal</h2>
+        <div class="center" v-if="isOpen">
+            <h2><slot> this is a modal</slot></h2>
+            <button @click="buttonClick">close modal</button>
         </div>
     </teleport>
 </template>
@@ -10,7 +11,18 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
     props: {
-        
+        isOpen: Boolean
+    },
+    emits: {
+        'close-modal': null
+    },
+    setup(props, context) {
+        const buttonClick = () => {
+            context.emit('close-modal')
+        }
+        return {
+            buttonClick
+        }
     }
 }) 
 </script>

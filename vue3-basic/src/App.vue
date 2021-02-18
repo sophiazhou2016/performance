@@ -4,7 +4,8 @@
     <h1>{{count}}</h1>
     <h1>{{double}}</h1>
     <button @click="increase">点赞+1</button>
-    <modal></modal> 
+    <button @click="openModal">open modal</button>
+    <modal :isOpen="modalIsOpen" @close-modal="onModalClose">This is my real modal</modal>
     <h1>X:{{x}}, Y: {{y}}</h1>
     <h1 v-if="loading">Loading !...</h1>
     <img v-if="loaded" class="picCat" :src="result[0].url" />
@@ -74,6 +75,13 @@ export default defineComponent({
     data.person.name = 'jing'
     const refData = toRefs(data)
     refData.count // 他里面的每一项都会变成响应式的，可以看到是Ref<number>
+    const modalIsOpen = ref(false)
+    const openModal = () => {
+      modalIsOpen.value = true
+    }
+    const onModalClose = () => {
+      modalIsOpen.value = false
+    }
     return {
       ...refData,
       greetings,
@@ -82,7 +90,10 @@ export default defineComponent({
       y,
       result,
       loading,
-      loaded
+      loaded,
+      modalIsOpen,
+      openModal,
+      onModalClose
       // ...data
       // 把值取出来会变成普通的值，失去响应式
       // count: data.count,
