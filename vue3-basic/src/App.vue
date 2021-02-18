@@ -4,9 +4,13 @@
     <h1>{{count}}</h1>
     <h1>{{double}}</h1>
     <button @click="increase">点赞+1</button>
+    {{error}}
     <Suspense>
       <template #default>
-        <async-show/>
+        <div>
+          <!-- <async-show/> -->
+          <dog-show />
+        </div>
       </template>
       <template #fallback>
         <h1>Loading !......</h1>
@@ -27,11 +31,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, toRefs, onMounted, onUnmounted, onUpdated, computed,watch, onRenderTriggered } from 'vue';
+import {
+  defineComponent,
+  ref,
+  reactive,
+  toRefs,
+  onMounted,
+  onUnmounted,
+  onUpdated,
+  computed,
+  watch,
+  onRenderTriggered,
+  onErrorCaptured
+} from 'vue';
 import useMousePosition from './hooks/useMousePosition';
 import useURLLoader from './hooks/useURLLoader';
 import modal from './components/modal.vue';
-import AsyncShow from './components/AsyncShow.vue';
+import AsyncShow from './components/basicAsyncShow.vue';
+import DogShow from './components/DogShow.vue'
 interface DataProps {
   count: number;
   double: number;
@@ -53,9 +70,15 @@ export default defineComponent({
   name: 'App',
   components: {
     modal,
-    AsyncShow
+    // AsyncShow,
+    DogShow
   },
   setup() {
+    const error = ref(null)
+    onErrorCaptured((e: any) => {
+      error.value = e
+      return true
+    })
     const data: DataProps = reactive({
       count: 0,
       increase: () => { data.count++ },
@@ -103,7 +126,8 @@ export default defineComponent({
       loaded,
       modalIsOpen,
       openModal,
-      onModalClose
+      onModalClose,
+      error
       // ...data
       // 把值取出来会变成普通的值，失去响应式
       // count: data.count,
