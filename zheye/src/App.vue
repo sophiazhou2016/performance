@@ -18,13 +18,19 @@ const testData: ColumnProps[] = [
   {
     id: 2,
     title: 'test2的专栏',
-    description: '这是test1的专栏，有一段非常有意思的简介，可以更新一下哦',
+    description: '这是test2的专栏，有一段非常有意思的简介，可以更新一下哦',
     avatar: 'https://vue3js.cn/docs/logo.png'
   },
   {
     id: 3,
     title: 'test3的专栏',
-    description: '这是test1的专栏，有一段非常有意思的简介，可以更新一下哦',
+    description: '这是test3的专栏这是test3的专栏这是test3的专栏这是test3的专栏这是test3的专栏，有一段非常有意思的简介，可以更新一下哦'
+    // avatar: 'https://vue3js.cn/docs/logo.png'
+  },
+  {
+    id: 4,
+    title: 'test4的专栏',
+    description: '这是test4的专栏，有一段非常有意思的简介，可以更新一下哦',
     avatar: 'https://vue3js.cn/docs/logo.png'
   }
 ]
