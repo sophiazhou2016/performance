@@ -2,6 +2,7 @@
   <div class="container">
     <global-header :user="currentUser"></global-header>
     <column-list :list="list"></column-list>
+    <pop-up></pop-up>
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import { defineComponent } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
+// import PopUp from './components/PopUp.vue'
 const currentUser: UserProps = {
   isLogin: true,
   name: 'jingjing'
@@ -45,6 +47,7 @@ export default defineComponent({
   components: {
     ColumnList,
     GlobalHeader
+    // PopUp
   },
   setup () {
     return {
