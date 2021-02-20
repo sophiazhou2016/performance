@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown">
+  <div class="dropdown" ref="dropdownRef">
     <a class="btn btn-outline-light mys-2 dropdown-toggle" href="#" @click="toggleOpen">{{title}}</a>
     <ul class="dropdown-menu" style="display:block" v-if="isOpen">
         <!-- <li><a class="dropdown-item" href="#">新建文章</a></li>
@@ -9,8 +9,8 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
+<script lang="ts">
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
 export default defineComponent({
   name: 'Dropdown',
   props: {
@@ -21,12 +21,27 @@ export default defineComponent({
   },
   setup () {
     const isOpen = ref(false)
+    const dropdownRef = ref<null | HTMLElement>(null)
     const toggleOpen = () => {
       isOpen.value = !isOpen.value
     }
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.value) {
+        if (!dropdownRef.value.contains(e.target) && isOpen.value) {
+          isOpen.value = false
+        }
+      }
+    }
+    onMounted(() => {
+      document.addEventListener('click', handler)
+    })
+    onUnmounted(() => {
+      document.removeEventListener('click', handler)
+    })
     return {
       isOpen,
-      toggleOpen
+      toggleOpen,
+      dropdownRef
     }
   }
 })
