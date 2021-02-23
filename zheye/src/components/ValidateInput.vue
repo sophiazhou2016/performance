@@ -3,9 +3,9 @@
       <input
           class="form-control"
           :class="{'is-invalid': inputRef.error}"
-          v-model="inputRef.val"
+          :value="inputRef.val"
           @blur="validateInput"
-          id="exampleInputEmail1" aria-describedby="emailHelp"
+          @input="updateValue"
           >
       <span v-if="inputRef.error" class="invalid-feedback">{{inputRef.message}}</span>
   </div>
@@ -21,14 +21,21 @@ export type RulesProp = RuleProp[]
 export default defineComponent({
   name: 'ValidateInput',
   props: {
-    rules: Array as PropType<RulesProp>
+    rules: Array as PropType<RulesProp>,
+    modelValue: String
   },
-  setup (props) {
+  setup (props, context) {
     const inputRef = reactive({
-      val: '',
+      val: props.modelValue || '',
       error: false,
       message: ''
     })
+    const updateValue = (e: KeyboardEvent) => {
+      const targetValue = (e.target as HTMLInputElement).value
+      inputRef.val = targetValue
+      console.log('targetValue:', targetValue)
+      context.emit('update:modelValue', targetValue)
+    }
     const emailReg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
 
     const validateInput = () => {
@@ -53,7 +60,8 @@ export default defineComponent({
     }
     return {
       inputRef,
-      validateInput
+      validateInput,
+      updateValue
     }
   }
 })
