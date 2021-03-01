@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <global-header :user="currentUser"></global-header>
-    <form>
+    <validate-form @form-submit="onFormSubmit">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Email address</label>
         <validate-input
@@ -9,6 +9,7 @@
           v-model="emailVal"
           placeholder="请输入邮箱地址"
           type="text"
+          ref="inputRef"
         ></validate-input>
         <div id="emailHelp" class="form-text" v-if="emailRef.error">{{emailRef.message}}</div>
       </div>
@@ -21,8 +22,10 @@
           type="password"
         ></validate-input>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+      <template v-slot:submit>
+        <button type="submit" class="btn btn-danger">提交</button>
+      </template>
+    </validate-form>
     <column-list :list="list"></column-list>
   </div>
 </template>
@@ -33,6 +36,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 import ValidateInput, { RulesProp } from './components/ValidateInput.vue'
+import ValidateForm from './components/ValidateForm.vue'
 
 const currentUser: UserProps = {
   isLogin: true,
@@ -69,15 +73,17 @@ export default defineComponent({
   components: {
     ColumnList,
     GlobalHeader,
-    ValidateInput
+    ValidateInput,
+    ValidateForm
   },
   setup () {
-    const emailVal = ref('jingjing')
+    const inputRef = ref<any>(null)
+    const emailVal = ref('jingjing@teest.com')
     const emailRules: RulesProp = [
       { type: 'required', message: '电子邮箱地址不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱地址' }
     ]
-    const passwordVal = ref('')
+    const passwordVal = ref('123')
     const passwordRules: RulesProp = [
       { type: 'required', message: '密码不能为空' }
     ]
@@ -96,6 +102,9 @@ export default defineComponent({
         emailRef.message = 'should be valid email'
       }
     }
+    const onFormSubmit = (result: boolean) => {
+      console.log(1234, result, inputRef.value.validateInput())
+    }
     return {
       list: testData,
       currentUser,
@@ -104,7 +113,9 @@ export default defineComponent({
       emailRules,
       emailVal,
       passwordRules,
-      passwordVal
+      passwordVal,
+      onFormSubmit,
+      inputRef
     }
   }
 })
