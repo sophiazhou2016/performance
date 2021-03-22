@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>事件代理：<a href="https://zhuanlan.zhihu.com/p/26536815">https://zhuanlan.zhihu.com/p/26536815</a></p>
+    <p>捕获、目标、冒泡</p>
+    <p>数组扁平化：https://juejin.cn/post/6844903805876699150</p>
+    <p>es6 的flat() 默认拉平1层</p>
+    <p>数组去重：https://segmentfault.com/a/1190000016418021</p>
+    <p>数组拷贝：浅拷贝:https://segmentfault.com/a/1190000018495759。<br>
+        深拷贝：https://juejin.cn/post/6844903620190666759</p>
+    <ul>拷贝 使用 JSON.stringify 的问题
+        <li>只能处理纯JSON数据</li>
+        <li>有几种情况会发生错误</li>
+        <li>包含不能转成 JSON 格式的数据</li>
+        <li>循环引用</li>
+        <li>undefined,NaN, -Infinity, Infinity 都会被转化成null</li>
+        <li>RegExp/函数不会拷贝</li>
+        <li>new Date()会被转成字符串</li></ul>
+    <script>
+        
+        // 事件代理
+        document.getElementById("father-id").onclick = function(event){
+            event = event|| window.event
+            let target = event.target || event.srcElement
+            //可以自己打印一下event.target.nodeName,看看是什么
+            if (target.nodeName.toLowerCase()==='xxx'){
+                //事件内容
+            }
+        }
+        // 数组对象
+        // 扁平化
+        function flatten(arr) {
+            let result = []
+            for (let i = 0, len = arr.length; i < len; i++) {
+                if (Array.isArray(arr[i])) {
+                    result = result.concat(flatten(arr[i]))
+                } else {
+                    result.push(arr[i])
+                }
+            }
+            return result
+        }
+        // es6 的 flat
+        [1, 2, [3, [4, 5]]].flat()
+        // [1, 2, 3, [4, 5]]
+
+        [1, 2, [3, [4, 5]]].flat(2)
+        // [1, 2, 3, 4, 5]
+        
+        // 去重- unique()
+        function unique1 (arr) {
+            let appeard = new Set()
+            return arr.filter(item => {
+                // 创建一个可以唯一标识对象的字符串id
+                let id = item + JSON.stringify(item)
+                if (appeard.has(id)) {
+                    return false
+                } else {
+                    appeard.add(id)
+                    return true
+                }
+            })
+        }
+        function unique2 (arr) {
+            return Array.from(new Set(arr))
+        }
+        function unique3 (arr) { // 非常常用的          
+            for(var i=0; i<arr.length; i++){
+                for(var j=i+1; j<arr.length; j++){
+                    if(arr[i]==arr[j]){         //第一个等同于第二个，splice方法删除第二个
+                        arr.splice(j,1);
+                        j--;
+                    }
+                }
+            }
+            return arr;
+        }
+        // 浅拷贝
+        function copy(obj) {
+            let result = Array.isArray(obj) ? [] : {}
+            Object.keys(obj).forEach(key => result[key] = obj[key])
+            return result
+        }
+        // otherStar = {...star}
+        // Object.assign({},star)
+
+        // 深拷贝
+        function copy(obj, appeard = new Map()) {
+            if (!(obj instanceof Object)) return obj //如果是原始数据类型
+            if (appeard.has(obj)) return appeard.get(obj) // 如果已经出现过
+
+            let result = Array.isArray(obj) ? [] : {}
+            appeard.set(obj, result) // 将新对象放入map
+
+            //遍历所有属性进行递归拷贝
+            ;[...Object.keys(obj),...Object.getOwnPropertySymbols(obj)]
+            .forEach(key => result[key] = copy(obj[key],appeard))
+
+            return result
+        }
+    </script>
+</body>
+</html>
